@@ -70,22 +70,29 @@
 
 环境要求：Node.js ≥ 20.9（本次验证使用 Node 24.20）、npm 10+。
 
-```bash
-cd fateway-blog
-npm install
+本地源码目录现在是 `deepseek build website`。迁移包里已经包含 `data/fateway.db` 和 `storage/uploads/`，不需要重新执行 seed 或创建管理员。
 
+```bash
+cd "deepseek build website"
+npm ci --include=dev
+
+# 可选：本地覆盖环境变量
 # Windows
 copy .env.example .env.local
 # macOS / Linux
 cp .env.example .env.local
 
-npm run db:migrate
-npm run db:seed        # 可选：写入带“示例”标记的演示文章与项目
-npm run admin:create   # 交互式创建管理员，密码输入不回显
 npm run dev
 ```
 
 打开 http://localhost:3000 。
+
+如果要以生产模式预览：
+
+```bash
+npm run build
+npm start
+```
 
 后台地址默认 http://localhost:3000/admin ，未登录会自动跳转登录页。
 
@@ -214,7 +221,7 @@ tar -czf fateway-media-$(date +%F).tar.gz storage/uploads
 ## 7. 项目结构
 
 ```text
-fateway-blog/
+deepseek build website/
 ├─ migrations/                 # SQL 迁移
 ├─ seed/posts/                 # 示例 Markdown（front matter + 正文）
 ├─ scripts/                    # 管理员初始化、迁移、种子、备份、重置
@@ -237,7 +244,8 @@ fateway-blog/
 │  │  ├─ config.ts             # 环境配置
 │  │  ├─ validation.ts         # 请求输入校验
 │  │  └─ api.ts                # 统一错误与权限包装
-│  └─ middleware.ts            # 后台路径隐藏、noindex 响应头├─ tests/                      # Vitest：密码、校验、Markdown、文章、认证
+│  └─ middleware.ts            # 后台路径隐藏、noindex 响应头
+├─ tests/                      # Vitest：密码、校验、Markdown、文章、认证
 ├─ e2e/verify.mjs              # Playwright + Edge 端到端验证
 ├─ docs/screenshots/           # 交付截图
 ├─ public/og.png               # 默认社交分享图
@@ -247,12 +255,12 @@ fateway-blog/
 
 ---
 
-## 8. 部署到 Ubuntu 24.04（未来参考）
+## 8. 部署到 Ubuntu 24.04
 
-当前阶段未执行真实部署，以下为基于本项目结构的参考步骤：
+本地目录名为 `deepseek build website`；下面的服务器路径统一以 `/srv/fateway-blog` 为示例，可以按需换成 `/srv/fateway`。
 
-1. 安装 Node.js 20/22 LTS、nginx、sqlite3；创建非 root 用户。
-2. 将代码放到例如 `/srv/fateway-blog`，执行 `npm ci`。
+1. 安装 Node.js 22/24 LTS、nginx、sqlite3；创建非 root 用户。
+2. 将代码放到例如 `/srv/fateway-blog`，执行 `npm ci --include=dev`。
 3. 配置生产环境变量（至少）：
 
 ```ini

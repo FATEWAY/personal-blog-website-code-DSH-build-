@@ -10,7 +10,7 @@
 ## 目录内容
 
 ```text
-fateway-deploy/
+deepseek build website/
 ├─ src/                       应用源码
 ├─ migrations/                SQL 迁移（0001–0003，已全部应用）
 ├─ scripts/                   管理员初始化、迁移、备份、重置脚本
@@ -36,6 +36,8 @@ fateway-deploy/
 **不包含**：`node_modules`、`.next`、`.env.local`、测试截图缓存。新服务器需要重新安装依赖并构建。
 
 > 迁移包里有个人资料、照片和管理员密码哈希，请通过 SSH/SCP 传输并妥善保管，不要上传到公开仓库或网盘。
+>
+> 本地文件夹现在叫 `deepseek build website`。下文的 `/srv/fateway-blog` 是服务器部署目录示例，可以换成 `/srv/fateway`。本地目录名中的空格不影响服务器路径。
 
 ---
 
@@ -65,25 +67,23 @@ sudo useradd --system --create-home --shell /bin/bash fateway
 从 Windows PowerShell（需要 OpenSSH 客户端）：
 
 ```powershell
-scp -r ".\fateway-deploy" fateway@YOUR_SERVER_IP:/srv/fateway-deploy
+scp -r ".\deepseek build website" fateway@YOUR_SERVER_IP:/srv/fateway-blog
 ```
 
-或者先打包再上传：
+也可以先打包，再上传压缩包：
 
 ```powershell
-scp ".\fateway-deploy-2026-10-23.tar.gz" fateway@YOUR_SERVER_IP:/srv/
+scp ".\deepseek-build-website.tar.gz" fateway@YOUR_SERVER_IP:/srv/
 ```
 
 服务器上：
 
 ```bash
-sudo mv /srv/fateway-deploy /srv/fateway-blog
-sudo chown -R fateway:fateway /srv/fateway-blog
 cd /srv/fateway-blog
+sudo chown -R fateway:fateway /srv/fateway-blog
 
 # 若上传的是压缩包：
-# sudo tar -xzf /srv/fateway-deploy-2026-10-23.tar.gz -C /srv
-# sudo mv /srv/fateway-deploy /srv/fateway-blog
+# sudo tar -xzf /srv/deepseek-build-website.tar.gz -C /srv
 ```
 
 文件的校验值在 `checksums.sha256`，可在服务器上执行：
