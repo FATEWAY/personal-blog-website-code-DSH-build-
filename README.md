@@ -1,4 +1,4 @@
-# fateway.cn — 个人技术博客与内容管理系统
+# 个人技术博客与内容管理系统
 
 一个可实际运行、可自行托管的个人站点：面向访客的博客 / 作品集，以及带真实认证、文章 CRUD、Markdown 编辑与图片上传的管理后台。
 
@@ -70,7 +70,7 @@
 
 环境要求：Node.js ≥ 20.9（本次验证使用 Node 24.20）、npm 10+。
 
-本地源码目录现在是 `deepseek build website`。迁移包里已经包含 `data/fateway.db` 和 `storage/uploads/`，不需要重新执行 seed 或创建管理员。
+本地源码目录现在是 `deepseek 构建网站`。迁移包里已经包含 `data/fateway.db` 和 `storage/uploads/`，无需重新执行 seed 或创建管理员。
 
 ```bash
 cd "deepseek build website"
@@ -78,7 +78,7 @@ npm ci --include=dev
 
 # 可选：本地覆盖环境变量
 # Windows
-copy .env.example .env.local
+将 .env.example 复制为 .env.local
 # macOS / Linux
 cp .env.example .env.local
 
@@ -122,7 +122,7 @@ npm run admin:create -- --force --username user
 | 变量 | 默认值 | 说明 |
 | --- | --- | --- |
 | `SITE_URL` | `http://localhost:3000` | 公开访问源。生产设置为 `https://fateway.cn`，用于 canonical / OG / sitemap / RSS。 |
-| `SITE_NAME` | `fateway` | 元数据兜底名称；站点展示名以后台设置为准。 |
+|`SITE_NAME网关元数据兜底名称；站点展示名以后台设置为准。
 | `ADMIN_PATH` | `/admin` | 后台路径。**生产环境需要重新构建才生效。** |
 | `DATABASE_PATH` | `./data/fateway.db` | SQLite 文件路径，相对项目根或绝对路径。 |
 | `UPLOAD_DIR` | `./storage/uploads` | 上传目录，位于 `public/` 之外，通过 `/media/*` 提供。 |
@@ -220,8 +220,8 @@ tar -czf fateway-media-$(date +%F).tar.gz storage/uploads
 
 ## 7. 项目结构
 
-```text
-deepseek build website/
+```文本
+deepseek 构建网站/
 ├─ migrations/                 # SQL 迁移
 ├─ seed/posts/                 # 示例 Markdown（front matter + 正文）
 ├─ scripts/                    # 管理员初始化、迁移、种子、备份、重置
