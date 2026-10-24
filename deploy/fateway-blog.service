@@ -1,0 +1,21 @@
+[Unit]
+Description=fateway.cn personal blog
+After=network.target
+
+[Service]
+Type=simple
+User=fateway
+Group=fateway
+WorkingDirectory=/srv/fateway-blog
+EnvironmentFile=/srv/fateway-blog/.env.production
+# Adjust if npm is installed elsewhere (check with: which npm)
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=3
+# Next.js writes .next cache and SQLite WAL files.
+ReadWritePaths=/srv/fateway-blog
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

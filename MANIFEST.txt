@@ -1,0 +1,69 @@
+fateway.cn — deployment snapshot
+=================================
+
+Generated: 2026-10-24 19:40 (Asia/Shanghai)
+Source project: fateway-blog
+Bundle version: 1.0.0
+Runtime used for verification: Node.js 24.20.0
+Framework: Next.js 15.5.28
+
+Database
+--------
+File: data/fateway.db
+Size: 184320 bytes
+Integrity: ok
+Migrations applied: 0001_init.sql, 0002_gallery.sql, 0003_gallery_category.sql
+Posts: 4
+Projects: 3
+Gallery photos: 2 (category: 未分类)
+Admins: 1
+Sessions: 0 (cleared for migration)
+
+Media
+-----
+Directory: storage/uploads
+Files: 3 (avatar + 2 gallery photos)
+Size: 312430 bytes
+All database media references resolve to files in this bundle.
+
+Admin
+-----
+Username: user
+Password: intentionally NOT included in this bundle.
+The database contains only the scrypt password hash. Use the random password
+from the delivery note, or reset it on the server with:
+  npm run admin:create -- --force --username user
+
+Excluded
+--------
+node_modules, .next, .env.local, e2e/artifacts, tsconfig.tsbuildinfo,
+storage/backups.
+
+.next is intentionally excluded: build it on the target server with
+`npm ci --include=dev` followed by `npm run build`. `next start` / server.js
+do not build automatically.
+
+Included extras
+---------------
+server.js                 PM2/BT startup wrapper; loads .env.production, resolves
+                          DATABASE_PATH/UPLOAD_DIR, checks the SQLite file, starts Next
+.env.production.example   production environment template
+deploy/nginx.conf.example reverse proxy sample
+deploy/fateway-blog.service systemd unit
+deploy/backup.sh          database + uploads backup helper
+DEPLOY.md                 step-by-step migration guide
+checksums.sha256          SHA-256 for all bundle files
+
+Security
+--------
+This bundle contains personal content, media and an administrator password hash.
+Transfer it over SSH/SCP only and keep it private. Do not publish it to a public
+repository or file-sharing service.
+
+Verification performed
+----------------------
+- SQLite PRAGMA integrity_check: ok
+- All media references present
+- Login, article CRUD, publishing, uploads and the public site verified locally
+- Production build: passing
+- Edge E2E: 11/11
